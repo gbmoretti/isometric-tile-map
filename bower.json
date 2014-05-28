@@ -1,0 +1,27 @@
+{
+  "name": "isometric-tile-map",
+  "version": "0.0.0",
+  "authors": [
+    "Guilherme Moretti guilhermebmoretti@gmail.com"
+  ],
+  "description": "Playing with Isomer lib",
+  "main": "index.html",
+  "keywords": [
+    "tilemap",
+    "isometric",
+    "2d",
+    "3d"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "isomer": "~0.2.4"
+  }
+}
