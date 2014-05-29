@@ -8,6 +8,7 @@
     <script src="js/tile.js"></script>
     <script src="js/scene.js"></script>
     <script src="js/map.js"></script>
+    <script src="js/game.js"></script>
 
     <style>
     #art {
@@ -20,17 +21,12 @@
     <script>
       window.onload = function() {
         var tile_map = [];
-        tile_map[0] = '######### ######### ######### #########';
-        tile_map[1] = '__*@#@*## @**#**### @@@_@@### __######*';
-        tile_map[3] = '_____*___ _________ _________ _________';
+        tile_map[0] = '######### ######### ######### ######### ######### ######### ######### #########';
+        tile_map[1] = '__*@#@*## @**#**### @@@_@@### __######* __*@#@*## @**#**### @@@_@@### __######*';
+        tile_map[3] = '_____*___ _________ _________ _________ _____*___ _________ _________ _________';
 
-        var tiles = new Map(tile_map);
-
-        var scene = new Scene();
-        tiles.forEach(function(tile) {
-          scene.add(tile);
-        });
-        scene.draw();
+        var game = new Game(tile_map);
+        game.start();
 
       };
     </script>
