@@ -9,9 +9,11 @@ function Map(tile_map) {
   this.x_spacement = 1.1;
   this.y_spacement = 2.1;
   this.tile_scale = 0.7;
+  this.tile_map = tile_map;
+}
 
-  tile_map.forEach(function(lines,z) {
-    console.log(z);
+Map.prototype.generate = function() {
+  this.tile_map.forEach(function(lines,z) {
     this._drawY(z,lines);
   }, this);
 
@@ -27,7 +29,7 @@ Map.prototype._drawX = function(z,y,line) {
 
     var cube = Isomer.Shape.Prism(Isomer.Point(x,y,z))
       .scale(Isomer.Point.ORIGIN,this.tile_scale,this.tile_scale,this.tile_scale);
-    tile = this._newTile(cube,tile_type);
+    tile = this._newTile(cube,tile_type,new Position(x,y,z));
     if(tile !== null) {
       this.tiles.push(tile);
     }
@@ -44,9 +46,9 @@ Map.prototype._drawY = function(z,lines) {
   }
 };
 
-Map.prototype._newTile = function(cube,tile_type) {
+Map.prototype._newTile = function(cube,tile_type,position) {
   if(this.tile_color[tile_type] === undefined) {
     return null;
   }
-  return new Tile(cube,this.tile_color[tile_type])
+  return new Tile(cube,this.tile_color[tile_type],position)
 };
