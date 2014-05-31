@@ -13,14 +13,16 @@ function Map(tile_map) {
 }
 
 Map.prototype.generate = function() {
+  var coord_z = 0;
   this.tile_map.forEach(function(lines,z) {
-    this._drawY(z,lines);
+    this._drawY(z,lines,coord_z);
+    coord_z++;
   }, this);
 
   return this.tiles;
 }
 
-Map.prototype._drawX = function(z,y,line) {
+Map.prototype._drawX = function(z,y,line,coord_z,coord_y) {
   var i = line.length;
   var x = line.length + this.x_spacement;
   while (i--) {
@@ -29,20 +31,20 @@ Map.prototype._drawX = function(z,y,line) {
 
     var cube = Isomer.Shape.Prism(Isomer.Point(x,y,z))
       .scale(Isomer.Point.ORIGIN,this.tile_scale,this.tile_scale,this.tile_scale);
-    tile = this._newTile(cube,tile_type,new Position(x,y,z));
+    tile = this._newTile(cube,tile_type,new Position(i,coord_y,coord_z));
     if(tile !== null) {
       this.tiles.push(tile);
     }
   }
 };
 
-Map.prototype._drawY = function(z,lines) {
+Map.prototype._drawY = function(z,lines,coord_z) {
   var lines = lines.split(' ');
   var j = lines.length;
   while(j--) {
     var line = lines[j];
     var y = j - this.y_spacement;
-    this._drawX(z,y,line);
+    this._drawX(z,y,line,coord_z,j);
   }
 };
 

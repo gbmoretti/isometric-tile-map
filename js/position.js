@@ -13,5 +13,7 @@ Position.prototype.equals = function(other) {
 
 Position.prototype.equals2d = function(other) {
   if(other === undefined) return this;
-  return (this.x === other.x) && (this.y === other.y);
+  if ((this.x === other.x) && (this.y === other.y)) {
+    return true;
+  }
 }
