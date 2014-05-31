@@ -8,10 +8,8 @@ function Game(tile_map) {
   this.max_y = 9;
   this.selected_x = 0;
   this.selected_y = 0;
-
-
-
-}
+  this.input = new Input();
+};
 
 Game.prototype._inBounds = function(x,y) {
   var a = (x >= 0 && x <= this.max_x &&
@@ -19,39 +17,11 @@ Game.prototype._inBounds = function(x,y) {
   return a;
 };
 
-Game.prototype._upPressed = function() {
-  var new_y = this.selected_y +1;
-  if(this._inBounds(this.selected_x,new_y)) {
-    this.selected_y = new_y;
-  }
-};
-
-Game.prototype._downPressed = function() {
-  var new_y = this.selected_y -1;
-  if(this._inBounds(this.selected_x,new_y)) {
-    this.selected_y = new_y;
-  }
-};
-
-Game.prototype._leftPressed = function() {
-  var new_x = this.selected_x -1;
-  if(this._inBounds(new_x,this.selected_y)) {
-    this.selected_x = new_x;
-  }
-};
-
-Game.prototype._rightPressed = function() {
-  var new_x = this.selected_x +1;
-  if(this._inBounds(new_x,this.selected_y)) {
-    this.selected_x = new_x;
-  }
-};
-
 Game.prototype.work = function() {
   this.scene = new Scene();
   selected_tile = new Position(this.selected_x,this.selected_y,1);
   this.scene.selectedTile(selected_tile);
-}
+};
 
 Game.prototype.draw = function() {
   var _this = this;
@@ -60,7 +30,7 @@ Game.prototype.draw = function() {
     _this.scene.add(tile);
   });
   this.scene.draw();
-}
+};
 
 Game.prototype.start = function() {
   this.work();
@@ -69,27 +39,22 @@ Game.prototype.start = function() {
   //this.draw_func = window.setInterval(this.draw.bind(this), 1000 / this.fps);
   var _this = this;
   window.onkeypress = function(event) {
-    console.log('oi');
-    switch(event.key) {
-      case "Up":
-        _this._upPressed();
-        break;
-      case "Down":
-        _this._downPressed();
-        break;
-      case "Left":
-        _this._leftPressed();
-        break;
-      case "Right":
-        _this._rightPressed();
-        break;
-    }
+    var direction = _this.input.keypressed(event);
+    _this.setSelectedTile(direction);
     _this.work();
     _this.draw();
   }
-
-}
+};
 
 Game.prototype.pause = function() {
   window.clearInterval(this.time_func);
-}
+};
+
+Game.prototype.setSelectedTile = function(direction) {
+  var new_x = this.selected_x + direction[0];
+  var new_y = this.selected_y + direction[1];
+  if(this._inBounds(new_x,new_y)) {
+    this.selected_x = new_x;
+    this.selected_y = new_y;
+  }
+};

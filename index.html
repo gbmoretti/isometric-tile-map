@@ -6,6 +6,7 @@
 
     <script src="bower_components/isomer/dist/isomer.min.js"></script>
     <script src="js/position.js"></script>
+    <script src="js/input.js"></script>
     <script src="js/tile.js"></script>
     <script src="js/scene.js"></script>
     <script src="js/map.js"></script>
@@ -23,8 +24,7 @@
       window.onload = function() {
         var tile_map = [];
         tile_map[0] = '######### ######### ######### ######### ######### ######### ######### #########';
-        tile_map[1] = '__*@#@*## @**#**### @@@_@@### __######* __*@#@*## @**#**### @@@_@@### __######*';
-        tile_map[3] = '_____*___ _________ _________ _________ _____*___ _________ _________ _________';
+        tile_map[1] = '__*__*___ _____***_ _*____*** ______**_ _____*__* ***_**_*_ ******___ ___**____';
 
         var game = new Game(tile_map);
         game.start();
