@@ -17,3 +17,7 @@ Position.prototype.equals2d = function(other) {
     return true;
   }
 }
+
+Position.prototype.move = function(x,y,z) {
+  return new Position(this.x+x,this.y+y,this.z+z);
+}

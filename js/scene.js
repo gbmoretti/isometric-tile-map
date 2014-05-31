@@ -1,7 +1,8 @@
-function Scene() {
-  this.tiles = [];
+function Scene(map_tiles) {
+  this.tiles = map_tiles;
   this.iso = new Isomer(document.getElementById("art"));
   this.selected_tile = null;
+  this.semi_selected = null;
 }
 
 Scene.prototype.add = function(tile) {
@@ -11,25 +12,27 @@ Scene.prototype.add = function(tile) {
 Scene.prototype.draw = function() {
   this._blank();
 
-  var x = 0;
-  while(x < this.tiles.length) {
-    var tile = this.tiles[x];
-    this._drawSelected(tile);
+  var selected_tile = this.tiles.get(this.selected_tile);
+  selected_tile.color = new Isomer.Color(30,150,30);
+
+  this.semi_selected.forEach(function(position) {
+    var tile = this.tiles.get(position);
+    if(tile) tile.color = new Isomer.Color(30,220,30);
+  }, this);
+
+  this.tiles.forEach(function(tile) {
     this.iso.add(tile.shape,tile.color);
-    x++;
-  }
+  }, this);
 };
 
 Scene.prototype._blank = function() {
   this.iso.canvas.clear();
 };
 
-Scene.prototype.selectedTile = function(coords) {
-  this.selected_tile = coords;
+Scene.prototype.selectedTile = function(position) {
+  this.selected_tile = position;
 };
 
-Scene.prototype._drawSelected = function(tile) {
-  if(tile.position.equals2d(this.selected_tile)) {
-    tile.color = new Isomer.Color(30,150,30);
-  }
-};
+Scene.prototype.semiSelectedTiles = function(positions) {
+  this.semi_selected = positions
+}

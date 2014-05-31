@@ -1,5 +1,5 @@
 function Map(tile_map) {
-  this.tiles = [];
+  this.tiles = null;
   this.tile_color = {
     '#': new Isomer.Color(200,200,200),
     '@': new Isomer.Color(100,100,100),
@@ -13,6 +13,7 @@ function Map(tile_map) {
 }
 
 Map.prototype.generate = function() {
+  this.tiles = new MapTiles();
   var coord_z = 0;
   this.tile_map.forEach(function(lines,z) {
     this._drawY(z,lines,coord_z);
@@ -31,7 +32,7 @@ Map.prototype._drawX = function(z,y,line,coord_z,coord_y) {
 
     var cube = Isomer.Shape.Prism(Isomer.Point(x,y,z))
       .scale(Isomer.Point.ORIGIN,this.tile_scale,this.tile_scale,this.tile_scale);
-    tile = this._newTile(cube,tile_type,new Position(i,coord_y,coord_z));
+    var tile = this._newTile(cube,tile_type,new Position(i,coord_y,coord_z));
     if(tile !== null) {
       this.tiles.push(tile);
     }

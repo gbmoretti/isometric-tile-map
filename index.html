@@ -7,24 +7,49 @@
     <script src="bower_components/isomer/dist/isomer.min.js"></script>
     <script src="js/position.js"></script>
     <script src="js/input.js"></script>
+    <script src="js/view.js"></script>
     <script src="js/tile.js"></script>
     <script src="js/scene.js"></script>
+    <script src="js/map_tiles.js"></script>
     <script src="js/map.js"></script>
     <script src="js/game.js"></script>
 
     <style>
     #art {
-      width: 400px;
-      height: 300px;
+      width: 800px;
+      height: 600px;
+      border: solid 1px #CCC;
     }
     </style>
 
 
     <script>
       window.onload = function() {
+        function randomTiles(opts,x,y) {
+          var ratio = opts.ratio;
+          var type = opts.type
+          var tile_string = '';
+          var c_x = x;
+
+          while(y > 0) {
+            c_x = x;
+            while(c_x > 0) {
+              c_x--;
+              var r = Math.floor(Math.random() * (10 - 0 + 1)) + 0;
+
+              var next_char = '_';
+              if(r <= ratio) next_char = type;
+              tile_string += next_char;
+            }
+            y--;
+            tile_string += ' ';
+          }
+          return tile_string;
+        }
         var tile_map = [];
-        tile_map[0] = '######### ######### ######### ######### ######### ######### ######### #########';
-        tile_map[1] = '__*__*___ _____***_ _*____*** ______**_ _____*__* ***_**_*_ ******___ ___**____';
+        tile_map[0] = "################## ################## ################## ################## ################## ################## ################## ################## ################## ################## ################## ################## ################## ################## ##################";
+        //tile_map[1] = '__*__*___ _____***_ _*____*** ______**_ _____*__* ***_**_*_ ******___ ___**____';
+        tile_map[2] = randomTiles({type: '*', ratio: 3},18,15);
 
         var game = new Game(tile_map);
         game.start();
@@ -33,6 +58,6 @@
     </script>
   </head>
   <body>
-    <canvas width="800" height="600" id="art"></canvas>
+    <canvas width="1600" height="1200" id="art"></canvas>
   </body>
 </html>

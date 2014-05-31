@@ -1,14 +1,15 @@
 function Game(tile_map) {
   this.fps = 30;
 
-  this.map_tiles = new Map(tile_map);
+  this.map_tiles = null;
   this.timeout_func = null;
 
-  this.max_x = 9;
-  this.max_y = 9;
+  this.max_x = 18;
+  this.max_y = 15;
   this.selected_x = 0;
   this.selected_y = 0;
   this.input = new Input();
+  this.tile_map = tile_map;
 };
 
 Game.prototype._inBounds = function(x,y) {
@@ -18,17 +19,22 @@ Game.prototype._inBounds = function(x,y) {
 };
 
 Game.prototype.work = function() {
-  this.scene = new Scene();
-  selected_tile = new Position(this.selected_x,this.selected_y,1);
+  this.map_tiles = new Map(this.tile_map);
+  this.map_tiles = this.map_tiles.generate();
+  this.scene = new Scene(this.map_tiles);
+
+  selected_tile = new Position(this.selected_x,this.selected_y,0);
   this.scene.selectedTile(selected_tile);
+
+  var viewCalculator = new View(selected_tile,this.map_tiles,1);
+  this.scene.semiSelectedTiles(viewCalculator);
 };
 
 Game.prototype.draw = function() {
   var _this = this;
-  var tiles_array = this.map_tiles.generate();
-  tiles_array.forEach(function(tile) {
-    _this.scene.add(tile);
-  });
+  // this.map_tiles.forEach(function(tile) {
+  //   _this.scene.add(tile);
+  // })
   this.scene.draw();
 };
 
